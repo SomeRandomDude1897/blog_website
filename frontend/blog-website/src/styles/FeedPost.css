@@ -1,0 +1,23 @@
+.feed-post-box {
+    background-color: rgb(230, 208, 183);
+    border-radius: 20px;
+    width: 60%;
+    margin: 0.5% 5%;
+    padding: 10px 20px;
+    border: none;
+}
+
+.feed-post-box:hover {
+    background-color: rgb(200, 153, 106);
+}
+
+.post-name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: left;
+}
+
+.post-content {
+    font-size: 1.1rem;
+    text-align: left;
+}

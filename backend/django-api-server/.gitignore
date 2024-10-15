@@ -1,6 +1,6 @@
 apitest/.env
 .vscode 
-apitest/profile_images
+apitest/media
 mysql_testapi.session.sql
 no_admin_panel.session.sql
 .venv

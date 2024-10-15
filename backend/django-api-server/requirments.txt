@@ -1,0 +1,11 @@
+django
+djangorestframework
+cryptography
+asgiref
+cffi
+pillow
+pycparser
+PyMySql
+python-decouple
+sqlparse
+django-cors-headers
