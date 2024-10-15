@@ -9,6 +9,7 @@
 
 .feed-post-box:hover {
     background-color: rgb(200, 153, 106);
+    cursor: pointer;
 }
 
 .post-name {

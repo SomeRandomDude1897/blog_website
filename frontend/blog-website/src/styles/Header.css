@@ -33,10 +33,11 @@
     background-color: #ffdab9;
     border: 2px solid transparent;
     color: #8b4513;
-    font-size: 1rem;
+    font-size: 1.2rem;
     padding: 8px 20px;
     border-radius: 20px;
     cursor: pointer;
+    text-decoration: none;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -45,3 +46,4 @@
     color: white;
     border-color: #8b4513;
 }
+

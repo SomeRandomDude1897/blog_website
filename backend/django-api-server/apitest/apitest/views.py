@@ -1,5 +1,6 @@
 from django.http import JsonResponse
-from .models import User, Post, PostImage
+from .models import UserData, Post, PostImage
+from django.contrib.auth.models import User
 from .serializers import (
     user_serializer,
     post_serializer,
@@ -89,13 +90,18 @@ def images_detail(request):
 @api_view(["GET", "PUT", "DELETE"])
 def users_detail(request):
     user = get_object_or_404(User, id=int(request.GET.get("request_id")))
-    # if request.method == "GET":
-    #     serializer = user_serializer(user, many=False)
-    #     user_data = user_data_serializer(user.data.all(), )
-    #     images = post_serializer(user.posts.all(), many=True)
-    #     return JsonResponse(
-    #         {"user_info": serializer.data, "user_extra_data": , "posts": images.data}, safe=False
-    #     )
+    if request.method == "GET":
+        serializer = user_serializer(user, many=False)
+        user_data = user_data_serializer(user.data, many=False)
+        images = post_serializer(user.posts.all(), many=True)
+        return JsonResponse(
+            {
+                "user_info": serializer.data,
+                "user_extra_data": user_data,
+                "posts": images.data,
+            },
+            safe=False,
+        )
     if request.method == "PUT":
         serializer = user_serializer(user, data=request.data)
         if serializer.is_valid():

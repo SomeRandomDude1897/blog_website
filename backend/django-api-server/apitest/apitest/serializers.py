@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 class user_serializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        # Указываем поля, которые хотим сериализовать
         fields = ["id", "username", "email", "first_name", "last_name"]
 
 

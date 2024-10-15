@@ -9,18 +9,14 @@ const Header = () => {
                     <h3 className="logo">Сайт с блогами</h3>
                     <ul className="nav-links-box">
                         <li className="nav-link">
-                            <a href="/">
-                                <Link to="/" className="nav-link-button">
-                                    Главная
-                                </Link>
-                            </a>
+                            <Link to="/" className="nav-link-button">
+                                Главная
+                            </Link>
                         </li>
                         <li className="nav-link">
-                            <a href="/login">
-                                <Link to="/login" className="nav-link-button">
-                                    Вход
-                                </Link>
-                            </a>
+                            <Link to="/login" className="nav-link-button">
+                                Вход
+                            </Link>
                         </li>
                     </ul>
                 </div>
