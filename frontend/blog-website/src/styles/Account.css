@@ -1,0 +1,30 @@
+/* Стили для AccountComponent */
+.account-container {
+    width: 90%; /* Установите ширину контейнера */
+    max-width: 600px; /* Ограничьте максимальную ширину */
+    margin: 20px auto; /* Центрируем контейнер */
+    padding: 20px; /* Добавляем отступы */
+    background-color: #ffdab9; /* Цвет фона контейнера */
+    border-radius: 20px; /* Скругление углов */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень для визуального эффекта */
+}
+
+.user-username {
+    font-size: 2rem; /* Размер шрифта для имени пользователя */
+    font-weight: bold; /* Жирный шрифт */
+    color: #8b4513; /* Цвет текста */
+    margin: 10px 0; /* Отступы сверху и снизу */
+}
+
+.user-email {
+    font-size: 1.5rem; /* Размер шрифта для email */
+    color: #6a4c93; /* Цвет текста для email */
+    margin-bottom: 20px; /* Отступ снизу */
+}
+
+.no-user-message {
+    font-size: 1.5rem; /* Размер шрифта для сообщения о неавторизованном пользователе */
+    color: #d2691e; /* Цвет текста */
+    text-align: center; /* Выравнивание по центру */
+    margin-top: 20px; /* Отступ сверху */
+}

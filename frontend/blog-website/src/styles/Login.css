@@ -18,6 +18,11 @@
     margin-bottom: 5px;
 }
 
+.login-incorrect {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
 /* Стили для input */
 .login-form input {
     padding: 10px;

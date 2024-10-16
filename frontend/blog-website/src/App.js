@@ -3,6 +3,7 @@ import FeedContent from './FeedContent';
 import Header from './Header';
 import {Routes, Route, BrowserRouter} from "react-router-dom"
 import LoginComponent from './LoginComponent';
+import AccountComponent from './AccountComponent';
 
 function App() {
   const api_url = process.env.REACT_APP_API_URL;
@@ -17,6 +18,8 @@ function App() {
       <Routes>
         <Route path="/" element={<FeedContent api_url={fetch_url} />}/>
         <Route path="/login" element={<LoginComponent api_url={auth_url}/>}/>
+        <Route path="/account" element={<AccountComponent/>}/>
+        <Route path="/account/:user_id" element={<AccountComponent/>}/>
       </Routes>
     </BrowserRouter>
     </>

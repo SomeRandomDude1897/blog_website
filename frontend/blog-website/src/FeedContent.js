@@ -1,8 +1,14 @@
 import useLoad from "./UseLoad";
 import FeedPost from "./FeedPost";
 import "./styles/FeedContent.css"
+import { AuthContext } from "./context/AuthProvider";
+import { useContext } from "react";
 
 const FeedContent = (props) => {
+
+    let auth = useContext(AuthContext);
+
+    console.log(auth?.username)
 
     const {data: feed_data, receivedData} = useLoad(props.api_url);
 

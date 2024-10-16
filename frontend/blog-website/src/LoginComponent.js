@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "./context/AuthProvider";
 import "./styles/Login.css"
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
+
 const LoginComponent = (props) => {
+
+    const { auth, setAuth } = useContext(AuthContext);
 
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+    const [authStatus, setAuthStatus] = useState("");
     const navigate = useNavigate();
 
     const checkLogin = async (e) =>  {
@@ -16,15 +21,18 @@ const LoginComponent = (props) => {
             "username": login,
             "password": password
           })
-        console.log(response.data)
         if (response?.data["successful"])
         {
-            console.log("LOGIN SUCCESSFUL!!!!!");   
-            console.log(response.data["user_info"]);
+            setAuthStatus("Success");
+            setAuth({"user": response.data["user_info"], "user_data": response.data["user_data"]});
+            navigate(-1);
+        }
+        else
+        {
+            setAuthStatus("Fail");
         }
         setLogin("");
         setPassword("");
-        navigate(-1);
     }
 
     return ( 
@@ -35,7 +43,9 @@ const LoginComponent = (props) => {
                 <label htmlFor="loginInput"> Пароль: </label>
                 <input type="password" id="loginInput" placeholder="введите ваш пароль" onChange={(e) => {setPassword(e.target.value)}} value={password} required></input>
                 <button>Войти</button>
+                <div style={{color: authStatus == "Success" ? "rgb(41, 201, 76)" : "rgb(168, 33, 23)" }} className="login-incorrect">{authStatus == "Success" ? "Авторизация успешна, возвращаемся на предыдущую страницу..." : authStatus == "Fail" ? "Некорректный логин или пароль!" : ""}</div>
             </form>
+            
         </>
      );
 }
