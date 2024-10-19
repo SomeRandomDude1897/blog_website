@@ -24,4 +24,4 @@ class post_serializer(serializers.ModelSerializer):
 class post_image_serializer(serializers.ModelSerializer):
     class Meta:
         model = PostImage
-        fields = ["id", "post", "title", "file"]
+        fields = ["id", "post", "file"]

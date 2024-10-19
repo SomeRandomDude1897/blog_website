@@ -12,6 +12,7 @@ import rest_framework.status
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate
+import django.utils.timezone
 
 # здесь  написал передачу данных через тело строки, чтобы было проще скейлить обьемы данных на запрос
 # реализованы все операции CRUD
@@ -20,7 +21,15 @@ from django.contrib.auth import authenticate
 @api_view(["GET", "POST"])
 def posts(request):
     if request.method == "GET":
-        amount = int(request.GET.get("amount"))
+        amount = int(request.GET.get("amount", 10))
+        try:
+            last_post_time = str(
+                request.GET.get("last_post_time", django.utils.timezone.now())
+            )
+        except:
+            last_post_time = str(django.utils.timezone.now())
+
+        print(last_post_time, amount)
 
         if amount < 0:
             return Response(
@@ -28,7 +37,9 @@ def posts(request):
                 status=rest_framework.status.HTTP_400_BAD_REQUEST,
             )
 
-        requested_posts = Post.objects.order_by("-created_at")[:amount]
+        requested_posts = Post.objects.filter(created_at__lt=last_post_time).order_by(
+            "-created_at"
+        )[:amount]
 
         serializer = post_serializer(requested_posts, many=True)
         return JsonResponse(serializer.data, safe=False)
@@ -56,8 +67,14 @@ def auth(request):
 
     if user is not None:
         serializer = user_serializer(user, many=False)
+        user_data = user_data_serializer(user.data, many=False)
         return JsonResponse(
-            {"successful": True, "user_info": serializer.data}, safe=False
+            {
+                "successful": True,
+                "user_info": serializer.data,
+                "user_data": user_data.data,
+            },
+            safe=False,
         )
     else:
         return JsonResponse({"successful": False})
@@ -97,7 +114,7 @@ def users_detail(request):
         return JsonResponse(
             {
                 "user_info": serializer.data,
-                "user_extra_data": user_data,
+                "user_extra_data": user_data.data,
                 "posts": images.data,
             },
             safe=False,
@@ -126,8 +143,14 @@ def posts_detail(request):
     if request.method == "GET":
         serializer = post_serializer(post, many=False)
         images = post_image_serializer(post.images.all(), many=True)
+        author = user_serializer(post.author, many=False)
         return JsonResponse(
-            {"post_info": serializer.data, "images": images.data}, safe=False
+            {
+                "post_info": serializer.data,
+                "images": images.data,
+                "author": author.data,
+            },
+            safe=False,
         )
     if request.method == "PUT":
         serializer = post_serializer(post, data=request.data)

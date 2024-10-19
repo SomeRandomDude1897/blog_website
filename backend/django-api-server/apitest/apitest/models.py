@@ -10,7 +10,7 @@ class UserData(models.Model):
     bio = models.CharField(max_length=1000)
 
     def __str__(self) -> str:
-        return self.user_origin
+        return str(self.user_origin)
 
 
 class Post(models.Model):
@@ -25,8 +25,7 @@ class Post(models.Model):
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, related_name="images", on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
     file = models.ImageField(upload_to="post_images")
 
     def __str__(self) -> str:
-        return self.title
+        return str(self.post) + " " + str(self.file)
