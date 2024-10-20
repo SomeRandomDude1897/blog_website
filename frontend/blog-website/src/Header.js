@@ -12,13 +12,8 @@ const Header = () => {
         <>
             <div className="header">
                 <div className="nav-box">
-                    <h3 className="logo">Сайт с блогами</h3>
+                    <Link to="/" className="logo">ЧаЧ</Link>
                     <ul className="nav-links-box">
-                        <li className="nav-link">
-                            <Link to="/" className="nav-link-button">
-                                Главная
-                            </Link>
-                        </li>
                         { auth?.user ?
                             <li className="nav-link">
                                 <Link to="/account" className="nav-link-button">

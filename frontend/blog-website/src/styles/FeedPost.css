@@ -5,20 +5,25 @@
     margin: 0.5% 5%;
     padding: 10px 20px;
     border: none;
+    text-decoration: none;
+    transition: transform 0.3s ease;
 }
 
 .feed-post-box:hover {
     background-color: rgb(200, 153, 106);
     cursor: pointer;
+    transform: scale(1.02);
 }
 
 .post-name {
     font-size: 1.4rem;
     font-weight: bold;
     text-align: left;
+    color: black;
 }
 
 .post-content {
     font-size: 1.1rem;
     text-align: left;
+    color: rgb(63, 63, 63);
 }

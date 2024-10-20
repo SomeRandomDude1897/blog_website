@@ -4,7 +4,6 @@ import "./styles/Login.css"
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-
 const LoginComponent = (props) => {
 
     const { auth, setAuth } = useContext(AuthContext);

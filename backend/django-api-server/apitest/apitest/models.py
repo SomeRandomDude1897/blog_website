@@ -29,3 +29,31 @@ class PostImage(models.Model):
 
     def __str__(self) -> str:
         return str(self.post) + " " + str(self.file)
+
+
+class PostComment(models.Model):
+    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE)
+    content = models.CharField(max_length=10000)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return (
+            str(self.post)
+            + " : "
+            + (
+                str(self.content)[:20]
+                if len(str(self.content)) > 20
+                else str(self.content)
+            )
+        )
+
+
+class CommentImage(models.Model):
+    comment = models.ForeignKey(
+        PostComment, related_name="images", on_delete=models.CASCADE
+    )
+    file = models.ImageField(upload_to="comment_images")
+
+    def __str__(self) -> str:
+        return str(self.comment) + " " + str(self.file)

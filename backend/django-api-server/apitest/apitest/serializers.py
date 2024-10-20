@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserData, Post, PostImage
+from .models import UserData, Post, PostImage, PostComment, CommentImage
 from django.contrib.auth.models import User
 
 
@@ -25,3 +25,22 @@ class post_image_serializer(serializers.ModelSerializer):
     class Meta:
         model = PostImage
         fields = ["id", "post", "file"]
+
+
+class post_comment_serializer(serializers.ModelSerializer):
+    class Meta:
+        model = PostComment
+        fields = [
+            "id",
+            "post",
+            "author",
+            "content",
+            "created_at",
+            "images",
+        ]
+
+
+class comment_image_serializer(serializers.ModelSerializer):
+    class Meta:
+        model = CommentImage
+        fields = ["id", "comment", "file"]
