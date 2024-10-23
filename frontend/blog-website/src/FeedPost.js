@@ -2,10 +2,12 @@ import "./styles/FeedPost.css"
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ScrollContext } from "./context/ScrollProvider";
+import { useLocation } from "react-router-dom";
 
 const FeedPost = (props) => {
     const {scroll: savedScrollPosition, setScroll} = useContext(ScrollContext);
     const crop_const = 20
+    const location = useLocation();
     function CropText(text) {
         if (text.length > window.innerWidth/crop_const)
         {
@@ -14,7 +16,10 @@ const FeedPost = (props) => {
         return text;
     }
     function set_scroll_state() {
-        setScroll(window.scrollY);
+        setScroll({
+            ...savedScrollPosition,
+            [location.pathname]: window.scrollY
+        });
     }
     return ( 
         <>

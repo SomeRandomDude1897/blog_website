@@ -9,7 +9,7 @@ const PageTracker = (params) => {
 
   useEffect(() => {
     if (previousLocation.current !== location.pathname && params.pages.includes(location.pathname)) {
-        setTimeout(() => {window.scrollTo(0, scroll)}, 100);
+        setTimeout(() => {window.scrollTo(0, scroll[location.pathname])}, 100);
     }
     previousLocation.current = location.pathname;
   }, [location]);

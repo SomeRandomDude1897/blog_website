@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-const ScrollContext = createContext();
+const ScrollContext = createContext({});
 
 export const ScrollProvider = ({children}) => {
     const [scroll, setScroll] = useState(0);

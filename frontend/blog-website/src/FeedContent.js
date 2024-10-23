@@ -8,18 +8,20 @@ import { ScrollContext } from "./context/ScrollProvider";
 
 const FeedContent = (props) => {
 
+    const scrollPadding = 200;
+
     const {scroll: savedScrollPosition, setScroll} = useContext(ScrollContext);
      
     const [postsFetchAmount, SetPostsFetchAmount] = useState(20);
 
     const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
 
-    console.log(savedScrollPosition)
-
+    const [prevScroll, updateScroll] = useState(0);
+    
     useEffect(() => {
       const handleScroll = () => {
         // Высота документа (вся страница)
-        const documentHeight = document.documentElement.scrollHeight;
+        const documentHeight = document.documentElement.scrollHeight - scrollPadding;
         
         // Текущая позиция скролла
         const scrollPosition = window.scrollY + window.innerHeight;
@@ -73,8 +75,12 @@ const FeedContent = (props) => {
                   SetGotData("Fail");
                 }
               };
-          
-            setTimeout(fetchData, 1000);
+            if (((hasScrolledToBottom && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - scrollPadding) || feedData.length == 0) && prevScroll <= window.scrollY + window.innerHeight)
+            {
+                console.log("knjfsdf")
+                setTimeout(fetchData, 1000);
+            }
+            updateScroll(window.scrollY + window.innerHeight );
             }
     , [hasScrolledToBottom])
 
