@@ -4,12 +4,17 @@ import { AuthContext } from "./context/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid';
+import { ScrollContext } from "./context/ScrollProvider";
 
 const FeedContent = (props) => {
+
+    const {scroll: savedScrollPosition, setScroll} = useContext(ScrollContext);
      
     const [postsFetchAmount, SetPostsFetchAmount] = useState(20);
 
     const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
+
+    console.log(savedScrollPosition)
 
     useEffect(() => {
       const handleScroll = () => {
@@ -18,7 +23,8 @@ const FeedContent = (props) => {
         
         // Текущая позиция скролла
         const scrollPosition = window.scrollY + window.innerHeight;
-  
+
+        
         // Если позиция скролла достигает или превышает высоту страницы
         if (scrollPosition >= documentHeight) {
           setHasScrolledToBottom(true); // Пользователь долистал до низа
@@ -26,7 +32,6 @@ const FeedContent = (props) => {
           setHasScrolledToBottom(false);
         }
       };
-  
       window.addEventListener("scroll", handleScroll);
   
       // Удаление слушателя при размонтировании компонента
