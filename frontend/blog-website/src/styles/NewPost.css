@@ -1,0 +1,84 @@
+/* Стили для нового поста */
+.new-post-box {
+    width: 100%; /* Ширина контейнера */
+    max-width: 600px; /* Максимальная ширина */
+    margin: 20px auto; /* Центрируем контейнер с отступами сверху и снизу */
+    padding: 20px; /* Отступы внутри контейнера */
+    background-color: #ffdab9; /* Цвет фона, совпадает с навигацией */
+    border-radius: 20px; /* Скругление углов */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень для визуального эффекта */
+}
+
+.new-post-form {
+    display: flex; /* Используем flex для выравнивания */
+    flex-direction: column; /* Вертикальное расположение элементов */
+}
+
+label {
+    font-size: 1.2rem; /* Размер шрифта для меток */
+    color: #8b4513; /* Цвет текста */
+    margin-bottom: 5px; /* Отступ снизу для меток */
+}
+
+input[type="text"],
+textarea {
+    font-size: 1rem; /* Размер шрифта для ввода */
+    padding: 10px; /* Отступы внутри поля ввода */
+    margin-bottom: 15px; /* Отступ снизу для полей ввода */
+    max-width: 96%;
+    min-width: 96%;
+    border: 2px solid #d2691e; /* Цвет рамки */
+    border-radius: 10px; /* Скругление углов */
+    outline: none; /* Убираем стандартное выделение */
+    transition: border-color 0.3s ease; /* Плавный переход цвета рамки */
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #8b4513; /* Цвет рамки при фокусе */
+}
+
+button {
+    background-color: #d2691e; /* Цвет кнопки */
+    color: white; /* Цвет текста кнопки */
+    font-size: 1.2rem; /* Размер шрифта для кнопки */
+    padding: 10px 20px; /* Отступы внутри кнопки */
+    border: none; /* Убираем рамку */
+    border-radius: 20px; /* Скругление углов */
+    cursor: pointer; /* Указываем, что элемент кликабельный */
+    transition: background-color 0.3s ease; /* Плавный переход фона кнопки */
+}
+
+button:hover {
+    background-color: #8b4513; /* Цвет кнопки при наведении */
+}
+
+/* Стили для инпута прикрепления файлов */
+#PostFileInput {
+    width: 96%; /* Занимает всю ширину родителя */
+    max-width: 100%; /* Максимальная ширина равна 100% родителя */
+    padding: 10px; /* Отступы внутри инпута */
+    margin-bottom: 15px; /* Отступ снизу */
+    border: 2px solid #d2691e; /* Цвет рамки */
+    border-radius: 10px; /* Скругление углов */
+    outline: none; /* Убираем стандартное выделение */
+    cursor: pointer; /* Указываем, что элемент кликабельный */
+    transition: border-color 0.3s ease; /* Плавный переход цвета рамки */
+    background-color: #fff; /* Цвет фона */
+}
+
+#PostFileInput:hover {
+    border-color: #8b4513; /* Цвет рамки при наведении */
+}
+
+#PostFileInput:focus {
+    border-color: #8b4513; /* Цвет рамки при фокусе */
+}
+
+/* Стили для текстовой метки инпута */
+#PostFileInput-label {
+    display: block; /* Отображение блочным элементом */
+    font-size: 1.2rem; /* Размер шрифта для метки */
+    color: #8b4513; /* Цвет текста */
+    margin-bottom: 5px; /* Отступ снизу для меток */
+}

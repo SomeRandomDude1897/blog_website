@@ -2,11 +2,21 @@ import "./styles/Header.css"
 import {Link} from "react-router-dom"
 import { AuthContext } from "./context/AuthProvider";
 import { useContext } from "react";
+import { ScrollContext } from "./context/ScrollProvider";
+import { useLocation } from "react-router-dom";
 
-const Header = () => {
+const Header = (props) => {
+    const location = useLocation()
     const  { auth, setAuth } = useContext(AuthContext);
+    const {scroll: savedScrollPosition, setScroll} = useContext(ScrollContext)
     console.log("amogus")
     console.log(auth?.user);
+    function set_scroll_state() {
+        setScroll({
+            ...savedScrollPosition,
+            [location.pathname]: window.scrollY
+        });
+    }
 
     return ( 
         <>
@@ -16,13 +26,16 @@ const Header = () => {
                     <ul className="nav-links-box">
                         { auth?.user ?
                             <li className="nav-link">
-                                <Link to="/account" className="nav-link-button">
+                                <Link to="/add_new_post" onClick={set_scroll_state} className="nav-link-button">
+                                    Новый пост
+                                </Link>
+                                <Link to="/account" onClick={set_scroll_state} className="nav-link-button">
                                     Аккаунт
                                 </Link>
                             </li>
                             :
                             <li className="nav-link">
-                                <Link to="/login" className="nav-link-button">
+                                <Link to="/login" onClick={set_scroll_state} className="nav-link-button">
                                     Вход
                                 </Link>
                             </li>

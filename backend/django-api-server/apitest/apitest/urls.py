@@ -17,7 +17,15 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from .views import posts, posts_detail, users_detail, images_detail, auth, get_comments
+from .views import (
+    posts,
+    posts_detail,
+    users_detail,
+    images_detail,
+    auth,
+    get_comments,
+    add_post,
+)
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -29,4 +37,5 @@ urlpatterns = [
     path("images_detail/", images_detail),
     path("auth/", auth),
     path("comments/", get_comments),
+    path("new_post", add_post),
 ]

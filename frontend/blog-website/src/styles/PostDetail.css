@@ -60,6 +60,8 @@
     cursor: pointer;
     font-size: 24px; /* Размер стрелочки */
     transition: box-shadow 0.3s ease, transform 0.3s ease;
+    color: black;
+    margin: 1%;
 }
 
 .arrow-button:hover {

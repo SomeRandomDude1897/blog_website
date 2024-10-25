@@ -17,6 +17,7 @@ from django.contrib.auth import authenticate
 from django.core.validators import validate_ipv46_address
 from django.core.exceptions import ValidationError
 import time
+from django.core.files.storage import FileSystemStorage
 
 # здесь  написал передачу данных через тело строки, чтобы было проще скейлить обьемы данных на запрос
 # реализованы все операции CRUD
@@ -184,16 +185,18 @@ def images_detail(request):
 
 @api_view(["GET", "PUT", "DELETE"])
 def users_detail(request):
-    user = get_object_or_404(User, id=int(request.GET.get("request_id")))
+    user = get_object_or_404(User, username=request.GET.get("username"))
     if request.method == "GET":
         serializer = user_serializer(user, many=False)
         user_data = user_data_serializer(user.data, many=False)
-        images = post_serializer(user.posts.all(), many=True)
+        user_posts = post_serializer(
+            user.posts.all().order_by("-created_at"), many=True
+        )
         return JsonResponse(
             {
                 "user_info": serializer.data,
                 "user_extra_data": user_data.data,
-                "posts": images.data,
+                "posts": user_posts.data,
             },
             safe=False,
         )
@@ -213,6 +216,45 @@ def users_detail(request):
         return Response(
             "data deleted successfully", status=rest_framework.status.HTTP_200_OK
         )
+
+
+@api_view(["POST"])
+def add_post(request):
+    new_post = post_serializer(
+        data={
+            "author": request.data["author"],
+            "postname": request.data["postname"],
+            "content": request.data["content"],
+        }
+    )
+    print(
+        {
+            "author": request.data["author"],
+            "postname": request.data["postname"],
+            "content": request.data["content"],
+        }
+    )
+    if new_post.is_valid():
+        saved_post = new_post.save()
+        print(request.FILES)
+        if request.FILES:
+            for field in request.data.keys():
+                print(field[:6])
+                if field[:6] == "image_":
+                    new_image = request.FILES[field]
+                    new_image_ser = post_image_serializer(
+                        data={"post": saved_post.id, "file": new_image}
+                    )
+                    print({"post": saved_post.id, "file": new_image})
+                    if new_image_ser.is_valid():
+                        new_image_ser.save()
+
+        return Response(
+            "post addded succesfully", status=rest_framework.status.HTTP_200_OK
+        )
+    return Response(
+        "something went wrong", status=rest_framework.status.HTTP_400_BAD_REQUEST
+    )
 
 
 @api_view(["GET", "PUT", "DELETE"])

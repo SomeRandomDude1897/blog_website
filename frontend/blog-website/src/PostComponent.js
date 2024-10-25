@@ -3,6 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./styles/PostDetail.css"
 import axios from "axios";
+import { Link } from "react-router-dom";
 import CommentComponent from "./CommentComponent";
 
 
@@ -86,7 +87,7 @@ const PostComponent = (props) => {
         return ( 
             <>
                 <h1 className="post-detail-name">{data["post_info"]["postname"]}</h1>
-                <div className="post-author-label">{"Автор: " + data["author"]["username"]}</div>
+                <Link className="post-author-label" to={"/account/" + data["author"]["username"]}>{"Автор: " + data["author"]["username"]}</Link>
                 <div className="post-date-label">{"Опубликовано " + datetime.toLocaleDateString() + " в " + datetime.toLocaleTimeString()}</div>
                 <div className="post-detail-content">{data["post_info"]["content"]}</div>
                 { data["images"].length > 0 ?
@@ -95,16 +96,16 @@ const PostComponent = (props) => {
                     {
                         data["images"].length > 1 ?
                         <button className="arrow-button" onClick={() => {setCurrentImageNumber((currentImageNumber - 1 + data["images"].length) % data["images"].length);}}>
-                            &#9664;
+                            {"<"}
                         </button> : null
-                    }
+                    } 
                     <div className="post-detail-images-box">
                         <img className="post-detail-image" src={ props.images_path + data["images"][currentImageNumber]["file"] }></img>
                     </div>
                     {
                         data["images"].length > 1 ?
-                        <button className="arrow-button" onClick={() => {setCurrentImageNumber((currentImageNumber + 1) % data["images"].length); console.log(currentImageNumber)}}>
-                            &#9654; 
+                        <button className="arrow-button" onClick={() => {setCurrentImageNumber((currentImageNumber + 1) % data["images"].length)}}>
+                            {">"}
                         </button> : null
                     }
                 </div>

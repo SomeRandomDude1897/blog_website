@@ -6,7 +6,7 @@ class UserData(models.Model):
     user_origin = models.OneToOneField(
         User, related_name="data", on_delete=models.CASCADE
     )
-    profile_pic = models.ImageField(upload_to="profile_images/")
+    profile_pic = models.ImageField(upload_to="profile_images/", blank=True, null=True)
     bio = models.CharField(max_length=1000)
 
     def __str__(self) -> str:

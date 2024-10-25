@@ -7,6 +7,7 @@ import AccountComponent from './AccountComponent';
 import PostComponent from './PostComponent';
 import { KeepAlive, AliveScope } from 'react-activation';
 import PageTracker from './PageTracker';
+import NewPostComponent from './NewPostComponent';
 
 function App() {
   const api_url = process.env.REACT_APP_API_URL;
@@ -26,9 +27,10 @@ function App() {
         <Routes>
           <Route path="/" element={<KeepAlive><FeedContent api_url={api_url}/></KeepAlive>}/>
           <Route path="/login" element={<LoginComponent api_url={auth_url}/>}/>
-          <Route path="/account" element={<AccountComponent/>}/>
-          <Route path="/account/:username" element={<AccountComponent/>}/>
+          <Route path="/account" element={<AccountComponent api_url={api_url} images_path={image_url} />}/>
+          <Route path="/account/:username" element={<AccountComponent api_url={api_url} images_path={image_url} />}/>
           <Route path="/post/:post_id" element={<PostComponent fetch_post_url={fetch_post_url} fetch_comments_url={fetch_comments_url} images_path={image_url}/>}/>
+          <Route path="/add_new_post" element={<NewPostComponent api_url={api_url} />}/>
         </Routes>
       </BrowserRouter>
     </AliveScope>

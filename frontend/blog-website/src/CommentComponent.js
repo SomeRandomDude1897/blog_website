@@ -1,12 +1,13 @@
 import "./styles/Comment.css"
+import { Link } from "react-router-dom";
 
 const CommentComponent = (props) => {
     const datetime = new Date(props.comment.created_at);
     return ( 
         <div className="comment-box">
-            <div className="comment-author">
+            <Link className="comment-author" to={"/account/" + props.comment.user["username"]}>
                 {props.comment.user["username"]}
-            </div>
+            </Link>
             <div className="comment-created-time">
                 {"Комментирует " + datetime.toLocaleDateString() + " в " + datetime.toLocaleTimeString()}
             </div>
