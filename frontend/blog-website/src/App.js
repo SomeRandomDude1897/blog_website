@@ -8,6 +8,7 @@ import PostComponent from './PostComponent';
 import { KeepAlive, AliveScope } from 'react-activation';
 import PageTracker from './PageTracker';
 import NewPostComponent from './NewPostComponent';
+import { AuthProvider } from './context/AuthProvider';
 
 function App() {
   const api_url = process.env.REACT_APP_API_URL;
@@ -20,6 +21,7 @@ function App() {
   console.log(image_url)
   return (
     <>
+    <AuthProvider api_url={api_url}>
     <AliveScope>
       <BrowserRouter>
         <PageTracker pages={save_scroll_pages}/>
@@ -34,6 +36,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AliveScope>
+    </AuthProvider>
     </>
   );
 }

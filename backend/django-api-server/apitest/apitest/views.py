@@ -17,6 +17,7 @@ from django.contrib.auth import authenticate
 from django.core.validators import validate_ipv46_address
 from django.core.exceptions import ValidationError
 import time
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.core.files.storage import FileSystemStorage
 
 # здесь  написал передачу данных через тело строки, чтобы было проще скейлить обьемы данных на запрос
@@ -139,6 +140,7 @@ def posts(request):
 def auth(request):
     login = request.data.get("username")
     password = request.data.get("password")
+    remember_me = request.data.get("remember_me")
 
     user = authenticate(username=login, password=password)
 
@@ -147,11 +149,15 @@ def auth(request):
     if user is not None:
         serializer = user_serializer(user, many=False)
         user_data = user_data_serializer(user.data, many=False)
+
         return JsonResponse(
             {
                 "successful": True,
                 "user_info": serializer.data,
                 "user_data": user_data.data,
+                "auth_token": (
+                    str(RefreshToken.for_user(user).access_token if remember_me else "")
+                ),
             },
             safe=False,
         )
@@ -185,7 +191,13 @@ def images_detail(request):
 
 @api_view(["GET", "PUT", "DELETE"])
 def users_detail(request):
-    user = get_object_or_404(User, username=request.GET.get("username"))
+    username = request.GET.get("username")
+    if username:
+        user = get_object_or_404(User, username=username)
+    else:
+        user_id = request.GET.get("user_id")
+        user = get_object_or_404(User, id=user_id)
+
     if request.method == "GET":
         serializer = user_serializer(user, many=False)
         user_data = user_data_serializer(user.data, many=False)
@@ -222,13 +234,6 @@ def users_detail(request):
 def add_post(request):
     new_post = post_serializer(
         data={
-            "author": request.data["author"],
-            "postname": request.data["postname"],
-            "content": request.data["content"],
-        }
-    )
-    print(
-        {
             "author": request.data["author"],
             "postname": request.data["postname"],
             "content": request.data["content"],

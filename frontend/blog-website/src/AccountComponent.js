@@ -14,9 +14,15 @@ const AccountComponent = (params) => {
     const [dataLoadStatus, setLoadStatus] = useState("pending");
     const navigate = useNavigate();
 
+    function exitAccount() {
+        localStorage.setItem('authToken', "");
+        setAuth({});
+        navigate("/");
+    }
+
     useEffect(
         () => {
-            const fetchData = async () => {
+            const fetchData = async (refetchCredentials) => {
                 try
                 {
                     console.log(params.api_url + "users_detail/?username=" + (username ? username : auth?.user["username"]))
@@ -29,7 +35,7 @@ const AccountComponent = (params) => {
                 catch (e)
                 {
                     setLoadStatus("fail");
-                    console.log(e);
+                    console.log(e);   
                 }
 
             }
@@ -37,6 +43,7 @@ const AccountComponent = (params) => {
         }
         , [username]
     )    
+
     if (auth?.user?.username === username && username) {
         navigate("/account");
     }
@@ -59,7 +66,11 @@ const AccountComponent = (params) => {
                     }
                     <div className="user-bio-text">{userData["user_extra_data"]["bio"]}</div>
                     </div>
+                    {username ? null : <button onClick={exitAccount} className="exit-button"> Выйти </button>}
+                    <br/>
+                    <br/>
                     <div className="user-posts-text"> Посты пользователя </div>
+                    
                 </div>
                 <div className="user-posts-box">
                 {

@@ -88,3 +88,8 @@
     margin-bottom: 20px; /* Отступ снизу */
     text-align: center;
 }
+
+.exit-button {
+    width: 10%;
+    align-self: center;
+}
