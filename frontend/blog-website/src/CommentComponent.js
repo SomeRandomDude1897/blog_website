@@ -18,7 +18,7 @@ const CommentComponent = (props) => {
                 { props.comment.images[0] ? 
                     props.comment.images.map( (item) => {
                      return (
-                     <img className="comment-image" src={ props.images_path + item["file"] }></img>
+                     <img className="comment-image" key={item.id} src={ props.images_path + item["file"] }></img>
                     )
                     }
                     )

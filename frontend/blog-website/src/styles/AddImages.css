@@ -1,0 +1,68 @@
+.delete-image-button {
+    width: 24px;
+    height: 24px;
+}
+
+.added-pictures-box {
+    display: flex;
+    gap: 20px;
+    padding: 1% 2%;
+    flex-direction: column;
+}
+
+.added-picture-box {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+}
+
+label {
+    font-size: 1.2rem; /* Размер шрифта для меток */
+    color: #8b4513; /* Цвет текста */
+    margin-bottom: 5px; /* Отступ снизу для меток */
+}
+
+button {
+    background-color: #d2691e; /* Цвет кнопки */
+    color: white; /* Цвет текста кнопки */
+    font-size: 1.2rem; /* Размер шрифта для кнопки */
+    padding: 10px 20px; /* Отступы внутри кнопки */
+    border: none; /* Убираем рамку */
+    border-radius: 20px; /* Скругление углов */
+    cursor: pointer; /* Указываем, что элемент кликабельный */
+    transition: background-color 0.3s ease; /* Плавный переход фона кнопки */
+}
+
+button:hover {
+    background-color: #8b4513; /* Цвет кнопки при наведении */
+}
+
+#PostFileInput:hover {
+    border-color: #8b4513; /* Цвет рамки при наведении */
+}
+
+#PostFileInput:focus {
+    border-color: #8b4513; /* Цвет рамки при фокусе */
+}
+
+/* Стили для текстовой метки инпута */
+#PostFileInput-label {
+    display: block; /* Отображение блочным элементом */
+    font-size: 1.2rem; /* Размер шрифта для метки */
+    color: #8b4513; /* Цвет текста */
+    margin-bottom: 5px; /* Отступ снизу для меток */
+}
+
+/* Стили для инпута прикрепления файлов */
+#PostFileInput {
+    width: 96%; /* Занимает всю ширину родителя */
+    max-width: 100%; /* Максимальная ширина равна 100% родителя */
+    padding: 10px; /* Отступы внутри инпута */
+    margin-bottom: 15px; /* Отступ снизу */
+    border: 2px solid #d2691e; /* Цвет рамки */
+    border-radius: 10px; /* Скругление углов */
+    outline: none; /* Убираем стандартное выделение */
+    cursor: pointer; /* Указываем, что элемент кликабельный */
+    transition: border-color 0.3s ease; /* Плавный переход цвета рамки */
+    background-color: #fff; /* Цвет фона */
+}

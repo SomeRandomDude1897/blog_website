@@ -20,6 +20,8 @@ label {
     margin-bottom: 5px; /* Отступ снизу для меток */
 }
 
+
+
 input[type="text"],
 textarea {
     font-size: 1rem; /* Размер шрифта для ввода */
@@ -53,32 +55,3 @@ button:hover {
     background-color: #8b4513; /* Цвет кнопки при наведении */
 }
 
-/* Стили для инпута прикрепления файлов */
-#PostFileInput {
-    width: 96%; /* Занимает всю ширину родителя */
-    max-width: 100%; /* Максимальная ширина равна 100% родителя */
-    padding: 10px; /* Отступы внутри инпута */
-    margin-bottom: 15px; /* Отступ снизу */
-    border: 2px solid #d2691e; /* Цвет рамки */
-    border-radius: 10px; /* Скругление углов */
-    outline: none; /* Убираем стандартное выделение */
-    cursor: pointer; /* Указываем, что элемент кликабельный */
-    transition: border-color 0.3s ease; /* Плавный переход цвета рамки */
-    background-color: #fff; /* Цвет фона */
-}
-
-#PostFileInput:hover {
-    border-color: #8b4513; /* Цвет рамки при наведении */
-}
-
-#PostFileInput:focus {
-    border-color: #8b4513; /* Цвет рамки при фокусе */
-}
-
-/* Стили для текстовой метки инпута */
-#PostFileInput-label {
-    display: block; /* Отображение блочным элементом */
-    font-size: 1.2rem; /* Размер шрифта для метки */
-    color: #8b4513; /* Цвет текста */
-    margin-bottom: 5px; /* Отступ снизу для меток */
-}

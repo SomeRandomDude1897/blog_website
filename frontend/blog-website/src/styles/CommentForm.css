@@ -1,0 +1,7 @@
+.comment-form-box {
+    outline: solid;
+    outline-width: 2px;
+    outline-color: #8b4513;
+    outline-offset: 5px;
+    border-radius: 10px;
+}

@@ -78,7 +78,7 @@ const FeedContent = (props) => {
             if (((hasScrolledToBottom && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - scrollPadding) || feedData.length == 0) && prevScroll <= window.scrollY + window.innerHeight)
             {
                 console.log("knjfsdf")
-                setTimeout(fetchData, 1000);
+                fetchData();
             }
             updateScroll(window.scrollY + window.innerHeight );
             }

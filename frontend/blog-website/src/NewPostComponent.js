@@ -2,14 +2,14 @@ import { useContext, useState } from "react";
 import "./styles/NewPost.css"
 import axios from 'axios';
 import { AuthContext } from "./context/AuthProvider";
-import { v4 as uuidv4 } from 'uuid';
+
+import AddImagesComponent from "./AddImagesComponent";
 
 const NewPostComponent = (params) => {
     const {auth, setAuth} = useContext(AuthContext);
 
     const [postName, setPostName] = useState("");
     const [postContent, setPostContent] = useState("");
-    const [currentPicture, setCurrentPicture] = useState(null);
     const [images, setImages] = useState([]);
     const [sentDataToServer, setDataSendStatus] = useState("")
 
@@ -26,7 +26,7 @@ const NewPostComponent = (params) => {
     
             // Добавляем изображения
             images.forEach((image, index) => {
-                formData.append(`image_${index}`, image);
+                formData.append(`image_${index}`, image.file);
             });
     
             try {
@@ -39,7 +39,6 @@ const NewPostComponent = (params) => {
     
                 console.log("Успешно:", response.data);
                 setImages([]);
-                setCurrentPicture(null);
                 setPostName("");
                 setPostContent("");
                 setDataSendStatus("success")
@@ -64,16 +63,6 @@ const NewPostComponent = (params) => {
         return 0;
     }
 
-    function AddPicture(event) {
-        event.preventDefault()
-        if (currentPicture != null)
-        {
-            setImages(images.concat(currentPicture))
-            console.log(images);
-        }
-    }
-
-
     return ( 
         <>
             <div className="new-post-box">
@@ -82,15 +71,10 @@ const NewPostComponent = (params) => {
                     <input type="text" id="PostNameInput" placeholder="введите название поста" onChange={(e) => {setPostName(e.target.value)}} value={postName} required/>
                     <label htmlFor="PostContentInput"> Текст: </label>
                     <textarea type="text" id="PostContentInput" placeholder="о чем расскажете?" onChange={(e) => {setPostContent(e.target.value)}} value={postContent} required></textarea>
-                    <label htmlFor="PostFileInput"> Прикрепите картинки </label>
-                    <input id="PostFileInput" accept="image/*" type="file" multiple onChange={(e) => setCurrentPicture(e.target.files[0])} />
-                    <button onClick={AddPicture}> Добавить картинку</button>
                     <br/>
-                    {
-                        images.map((item) => {
-                            return (<div key={uuidv4()}>Картинка</div>)
-                        })
-                    }
+                    <AddImagesComponent images={images} setImages={setImages}></AddImagesComponent>
+                    <br/>
+                    <br/>
                     <br/>
                     <button>Запостить</button>
                 </form>

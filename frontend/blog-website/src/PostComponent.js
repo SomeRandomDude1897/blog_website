@@ -4,7 +4,9 @@ import { useParams } from "react-router-dom";
 import "./styles/PostDetail.css"
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 import CommentComponent from "./CommentComponent";
+import CommentFormComponent from "./CommentFormComponent";
 
 
 // class post_serializer(serializers.ModelSerializer):
@@ -17,6 +19,8 @@ const PostComponent = (props) => {
     const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
     const [comments, setComments ] = useState([]);
     const [commentsLoadAmount, setCommentsLoadAmount] = useState(10);
+
+    console.log(props.api_url);
 
     useEffect(() => {
       const handleScroll = () => {
@@ -47,9 +51,9 @@ const PostComponent = (props) => {
             if (fetchStatus == "success")
             {
                 console.log("load comments");
-                console.log(props.fetch_comments_url + "?post_id="
+                console.log(props.api_url + "comments/" + "?post_id="
                     + data["post_info"]["id"] + "&amount=" + commentsLoadAmount + "&start_amount=" + (comments ? comments.length : 0));
-                const comments_request = await axios.get(props.fetch_comments_url + "?post_id="
+                const comments_request = await axios.get(props.api_url + "comments/" + "?post_id="
                      + data["post_info"]["id"] + "&amount=" + commentsLoadAmount + "&start_amount=" + (comments ? comments.length : 0))
                 setComments(comments.concat(comments_request.data))
                 console.log(comments)
@@ -69,7 +73,7 @@ const PostComponent = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${props.fetch_post_url}?request_id=${post_id}`);
+                const response = await axios.get(`${props.api_url + "/posts_detail/"}?request_id=${post_id}`);
                 setData(response.data);
                 setFetchStatus("success");
             } catch (e) {
@@ -113,13 +117,16 @@ const PostComponent = (props) => {
                         data["images"].length > 1 ?
                             <div className="post-image-number-label">{(currentImageNumber + 1) + " из " +data["images"].length}</div> : null
                 }
+                </>
+                : null
+                }
+            <>
+                <CommentFormComponent api_url={props.api_url} post_id={data["post_info"]["id"]}></CommentFormComponent>
             </>
-            : null
-            }
             <>
                 {comments.map((item) => {
                     return (
-                        <CommentComponent comment={item} images_path={props.images_path} key={item.id}></CommentComponent>
+                        <CommentComponent comment={item} images_path={props.images_path} key={uuidv4()}></CommentComponent>
                     )
                 }
                 )}

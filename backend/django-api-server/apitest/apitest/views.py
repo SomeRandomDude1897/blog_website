@@ -137,6 +137,46 @@ def posts(request):
 
 
 @api_view(["POST"])
+def add_comment(request):
+    new_comment = post_comment_serializer(
+        data={
+            "post": request.data.get("post"),
+            "author": request.data.get("author"),
+            "content": request.data.get("content"),
+        }
+    )
+
+    print(
+        {
+            "post": request.data.get("post"),
+            "content": request.data.get("content"),
+            "author": request.data.get("author"),
+        },
+        new_comment.is_valid(),
+    )
+    if new_comment.is_valid():
+        saved_comment = new_comment.save()
+        print(request.FILES)
+        if request.FILES:
+            for field in request.data.keys():
+                print(field[:6])
+                if field[:6] == "image_":
+                    new_image = request.FILES[field]
+                    new_image_ser = comment_image_serializer(
+                        data={"comment": saved_comment.id, "file": new_image}
+                    )
+                    print({"comment": saved_comment.id, "file": new_image})
+                    if new_image_ser.is_valid():
+                        new_image_ser.save()
+        return Response(
+            "comment added succesfully", status=rest_framework.status.HTTP_200_OK
+        )
+    return Response(
+        "something went wrong", status=rest_framework.status.HTTP_400_BAD_REQUEST
+    )
+
+
+@api_view(["POST"])
 def auth(request):
     login = request.data.get("username")
     password = request.data.get("password")

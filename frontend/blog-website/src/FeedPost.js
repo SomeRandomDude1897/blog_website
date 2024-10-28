@@ -21,6 +21,7 @@ const FeedPost = (props) => {
             [location.pathname]: window.scrollY
         });
     }
+    console.log(props.item)
     return ( 
         <>
             <Link to={"/post/" + props.item.id} className="feed-post-box" onClick={set_scroll_state}>

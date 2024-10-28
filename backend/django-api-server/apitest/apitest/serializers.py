@@ -36,7 +36,6 @@ class post_comment_serializer(serializers.ModelSerializer):
             "author",
             "content",
             "created_at",
-            "images",
         ]
 
 
