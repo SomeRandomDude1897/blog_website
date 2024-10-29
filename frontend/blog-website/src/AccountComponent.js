@@ -12,6 +12,8 @@ const AccountComponent = (params) => {
     const {auth, setAuth} = useContext(AuthContext);
     const [userData, setUserData] = useState({});
     const [dataLoadStatus, setLoadStatus] = useState("pending");
+    const [editingBio, setEditingBioStatus] = useState(false);
+    const [newBioText, setNewBioText] = useState("");
     const navigate = useNavigate();
 
     function exitAccount() {
@@ -20,15 +22,66 @@ const AccountComponent = (params) => {
         navigate("/");
     }
 
+    console.log(editingBio)
+
+    const updateProfile = async (newProfileData) => {
+        try
+        {
+            console.log(params.api_url)
+            const formData = new FormData();
+            formData.append(`user_origin`, newProfileData["user_origin"]);
+            if (newProfileData["bio"])
+            {
+                formData.append(`bio`, newProfileData["bio"]);
+            }
+            if (newProfileData["profile_pic"])
+            {
+                formData.append(`profile_pic`, newProfileData["profile_pic"]);
+            }
+            const responce = await axios.put(params.api_url + "update_user_data", formData);
+            console.log(responce.data);
+            setLoadStatus("success");
+            navigate("/account/" + auth?.user["username"])
+            return responce.data;
+        }
+        
+        catch (e)
+        {
+            setLoadStatus("fail");
+            console.log(e);
+        }
+
+    }
+
+    function changeProfilePic(picture) {
+        const new_profile_data = {
+            "user_origin": auth?.user["id"],
+            "profile_pic": picture
+        }
+        updateProfile(new_profile_data)
+    }
+
+    const changeBio = async () => {
+        setEditingBioStatus(false);
+        
+        const new_profile_data = {
+            "user_origin": auth?.user["id"],
+            "bio": newBioText,
+        }
+        updateProfile(new_profile_data)
+    }
+
+
     useEffect(
         () => {
-            const fetchData = async (refetchCredentials) => {
+            const fetchData = async () => {
                 try
                 {
                     console.log(params.api_url + "users_detail/?username=" + (username ? username : auth?.user["username"]))
                     const responce = await axios.get(params.api_url + "users_detail/?username=" + (username ? username : auth?.user["username"]));
                     console.log(responce.data);
                     setUserData(responce.data);
+                    setNewBioText(responce.data["user_extra_data"]["bio"]);
                     setLoadStatus("success");
                     return responce.data;
                 }
@@ -47,12 +100,15 @@ const AccountComponent = (params) => {
     if (auth?.user?.username === username && username) {
         navigate("/account");
     }
+    
     return (
         <>
         {
+            
             dataLoadStatus == "success" ?
             (
                 <>
+
                 <div className="user-profile-info-box">
                     <div className="user-username">  {userData["user_info"]["username"]} </div>
                     {username ? null : <div className="user-email"> {"Email: " + userData["user_info"]["email"]} </div>}
@@ -64,9 +120,21 @@ const AccountComponent = (params) => {
                         )
                     : null
                     }
-                    <div className="user-bio-text">{userData["user_extra_data"]["bio"]}</div>
+                    { editingBio ? 
+                    <textarea className="user-bio-textarea" onChange={(e) => {setNewBioText(e.target.value)}} value={newBioText}></textarea> :
+                    <div className="user-bio-text">{userData["user_extra_data"]["bio"]}</div>}
                     </div>
-                    {username ? null : <button onClick={exitAccount} className="exit-button"> Выйти </button>}
+                    {username ? null : 
+                        <div className="profile-control-box">
+                            <div className="change-profile-picture-box">
+                                <label>Сменить изображение профиля</label>
+                                <br/>
+                                <input accept="image/*" type="file" multiple onChange={(e) => changeProfilePic(e.target.files[0])} className="change-profile-picture"></input>
+                            </div>
+                            { editingBio ? <button onClick={changeBio}> Закончить редактирование биографии</button> : <button onClick={() => {setEditingBioStatus(true)}} className="change-bio"> Сменить биографию </button>}
+                            <button onClick={exitAccount} className="exit-button"> Выйти </button>
+                        </div>
+                    }
                     <br/>
                     <br/>
                     <div className="user-posts-text"> Посты пользователя </div>

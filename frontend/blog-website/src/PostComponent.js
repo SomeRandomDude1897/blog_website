@@ -19,8 +19,34 @@ const PostComponent = (props) => {
     const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
     const [comments, setComments ] = useState([]);
     const [commentsLoadAmount, setCommentsLoadAmount] = useState(10);
+    const { post_id } = useParams();
+
+    const [ data, setData ] = useState(null);
+    const [ fetchStatus, setFetchStatus ] = useState("pending");
+
+    const [currentImageNumber, setCurrentImageNumber] = useState(0);
 
     console.log(props.api_url);
+
+    const fetchComments = async () => {
+        console.log(fetchStatus)
+        if (fetchStatus == "success")
+        {
+            console.log("load comments");
+            console.log(props.api_url + "comments/" + "?post_id="
+                + data["post_info"]["id"] + "&amount=" + commentsLoadAmount + "&start_amount=" + (comments ? comments.length : 0));
+            const comments_request = await axios.get(props.api_url + "comments/" + "?post_id="
+                 + data["post_info"]["id"] + "&amount=" + commentsLoadAmount + "&start_amount=" + (comments ? comments.length : 0))
+            setComments(comments.concat(comments_request.data))
+            console.log(comments)
+        }
+        else
+        {
+            setTimeout(() => {console.log(fetchStatus)}, 1000)
+        }
+    }
+
+    
 
     useEffect(() => {
       const handleScroll = () => {
@@ -37,6 +63,23 @@ const PostComponent = (props) => {
           setHasScrolledToBottom(false);
         }
       };
+      const fetchData = async () => {
+        try {
+            const response = await axios.get(`${props.api_url + "/posts_detail/"}?request_id=${post_id}`);
+            const comments_request = await axios.get(props.api_url + "comments/" + "?post_id="
+                + response.data["post_info"]["id"] + "&amount=" + commentsLoadAmount + "&start_amount=" + (comments ? comments.length : 0))
+            setComments(comments.concat(comments_request.data))
+            setData(response.data);
+            setFetchStatus("success");
+            fetchComments()
+            
+        } catch (e) {
+            console.error(e);
+            setFetchStatus("fail");
+        }
+      };
+
+      fetchData();
   
       window.addEventListener("scroll", handleScroll);
   
@@ -46,44 +89,16 @@ const PostComponent = (props) => {
       };
     }, []);
 
+    console.log(hasScrolledToBottom);
+
+
     useEffect(() => {
-            const fetchComments = async () => {
-            if (fetchStatus == "success")
-            {
-                console.log("load comments");
-                console.log(props.api_url + "comments/" + "?post_id="
-                    + data["post_info"]["id"] + "&amount=" + commentsLoadAmount + "&start_amount=" + (comments ? comments.length : 0));
-                const comments_request = await axios.get(props.api_url + "comments/" + "?post_id="
-                     + data["post_info"]["id"] + "&amount=" + commentsLoadAmount + "&start_amount=" + (comments ? comments.length : 0))
-                setComments(comments.concat(comments_request.data))
-                console.log(comments)
-            }
-        }
         fetchComments();
     }, [hasScrolledToBottom]);
 
-    const { post_id } = useParams();
 
-    const [ data, setData ] = useState(null);
-    const [ fetchStatus, setFetchStatus ] = useState("pending");
 
-    const [currentImageNumber, setCurrentImageNumber] = useState(0);
-
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${props.api_url + "/posts_detail/"}?request_id=${post_id}`);
-                setData(response.data);
-                setFetchStatus("success");
-            } catch (e) {
-                console.error(e);
-                setFetchStatus("fail");
-            }
-        };
-
-        fetchData();
-    }, [post_id]);
+    console.log(fetchStatus)
 
     if (fetchStatus == "success")
     {

@@ -3,6 +3,10 @@
     height: 24px;
 }
 
+.delete-image-button:hover {
+    scale: 1.05;
+}
+
 .added-pictures-box {
     display: flex;
     gap: 20px;

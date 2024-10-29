@@ -7,6 +7,7 @@
     background-color: #ffdab9; /* Цвет фона, совпадает с навигацией */
     border-radius: 20px; /* Скругление углов */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень для визуального эффекта */
+    margin-top: 4.5%;
 }
 
 .new-post-form {
@@ -19,8 +20,6 @@ label {
     color: #8b4513; /* Цвет текста */
     margin-bottom: 5px; /* Отступ снизу для меток */
 }
-
-
 
 input[type="text"],
 textarea {

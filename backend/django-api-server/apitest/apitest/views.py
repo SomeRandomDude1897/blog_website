@@ -176,6 +176,51 @@ def add_comment(request):
     )
 
 
+@api_view(["PUT"])
+def update_user_data(request):
+    try:
+        user_data_instance = UserData.objects.get(
+            user_origin=request.data.get("user_origin")
+        )
+    except UserData.DoesNotExist:
+        return Response(
+            "User not found", status=rest_framework.status.HTTP_404_NOT_FOUND
+        )
+
+    # Передайте instance в сериалайзер вместе с обновленными данными
+    if request.FILES:
+        update_user_data_serializer = user_data_serializer(
+            instance=user_data_instance,
+            data={
+                "user_origin": request.data.get("user_origin"),
+                "profile_pic": request.FILES.get("profile_pic"),
+                "bio": user_data_instance.bio,
+            },
+            partial=True,  # Позволяет обновить только переданные поля
+        )
+    elif request.data.get("bio"):
+        update_user_data_serializer = user_data_serializer(
+            instance=user_data_instance,
+            data={
+                "user_origin": request.data.get("user_origin"),
+                "profile_pic": user_data_instance.profile_pic,
+                "bio": request.data.get("bio"),
+            },
+            partial=True,  # Позволяет обновить только переданные поля
+        )
+
+    if update_user_data_serializer.is_valid():
+        update_user_data_serializer.save()
+        return Response(
+            "User data updated successfully", status=rest_framework.status.HTTP_200_OK
+        )
+    else:
+        print(update_user_data_serializer.errors)
+        return Response(
+            "Something went wrong", status=rest_framework.status.HTTP_400_BAD_REQUEST
+        )
+
+
 @api_view(["POST"])
 def register(request):
     if User.objects.filter(email=request.data.get("email")).exists():

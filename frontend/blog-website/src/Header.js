@@ -1,7 +1,7 @@
 import "./styles/Header.css"
 import {Link} from "react-router-dom"
 import { AuthContext } from "./context/AuthProvider";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ScrollContext } from "./context/ScrollProvider";
 import { useLocation } from "react-router-dom";
 

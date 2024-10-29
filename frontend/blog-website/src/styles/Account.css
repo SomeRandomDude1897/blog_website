@@ -15,10 +15,12 @@
     color: #8b4513; /* Цвет текста */
     margin: 10px 0; /* Отступы сверху и снизу */
     text-align: center;
+    margin-top: 3.5%;
 }
 
 .user-profile-info-box {
     width: 100%;
+    max-block-size: 35%;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -89,7 +91,27 @@
     text-align: center;
 }
 
+.profile-control-box{
+    display: flex;
+    justify-content: space-between;
+    padding: 0% 25%;
+}
+
 .exit-button {
-    width: 10%;
-    align-self: center;
+    width: 20%;
+}
+
+.user-bio-textarea {
+    margin-top: 3%;
+    margin-bottom: 3%;
+    max-width: 30%; /* Максимальная ширина */
+    min-width: 30%; /* Минимальная ширина */
+    max-height: 30%;
+    min-height: 30%;
+    resize: none;
+    box-sizing: border-box; /* Учитывает отступы и границы в ширине */
+}
+
+.change-profile-picture-box {
+    width: 20%;
 }

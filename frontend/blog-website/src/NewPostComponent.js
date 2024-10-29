@@ -72,7 +72,7 @@ const NewPostComponent = (params) => {
                     <label htmlFor="PostContentInput"> Текст: </label>
                     <textarea type="text" id="PostContentInput" placeholder="о чем расскажете?" onChange={(e) => {setPostContent(e.target.value)}} value={postContent} required></textarea>
                     <br/>
-                    <AddImagesComponent images={images} setImages={setImages}></AddImagesComponent>
+                    <AddImagesComponent max_images={10} images={images} setImages={setImages}></AddImagesComponent>
                     <br/>
                     <br/>
                     <br/>

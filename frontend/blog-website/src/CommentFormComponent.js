@@ -3,6 +3,7 @@ import { AuthContext } from "./context/AuthProvider";
 import axios from "axios";
 import AddImagesComponent from "./AddImagesComponent";
 import "./styles/CommentForm.css"
+import { Link } from "react-router-dom";
 
 const CommentFormComponent = (params) => {
 
@@ -60,21 +61,39 @@ const CommentFormComponent = (params) => {
         }
         return 0;
     }
-
-    return ( 
-        <>
-            <br/>
-            <br/>
-            <form className="comment-form-box" onSubmit={PostNewComment}>
-                <label htmlFor="comment-content">Оставьте комментарий</label>
-                <textarea type="text" id="comment-box" onChange={(e) => {setCommentText(e.target.value)}} placeholder="Напишите, что думаете" value={commentText}></textarea>
-                <AddImagesComponent max_images={max_images} images={commentImages} setImages={setCommentImages}></AddImagesComponent>
-                <button> Ответить </button>
+    if (auth?.user?.id)
+    {
+        return ( 
+            <>
                 <br/>
-                <label>{showedError}</label>
-            </form>
-        </>
-     );
+                <br/>
+                <form className="comment-form-box" onSubmit={PostNewComment}>
+                    <label htmlFor="comment-content">Оставьте комментарий</label>
+                    <textarea type="text" id="comment-box" onChange={(e) => {setCommentText(e.target.value)}} placeholder="Напишите, что думаете" value={commentText}></textarea>
+                    <AddImagesComponent max_images={max_images} images={commentImages} setImages={setCommentImages}></AddImagesComponent>
+                    <button> Ответить </button>
+                    <br/>
+                    <label>{showedError}</label>
+                </form>
+            </>
+        );
+    }
+    else 
+    {
+        return (
+            <>
+                <br/>
+                <br/>
+                <label> Войдите или зарегистрируйтесь, чтобы оставлять комментарии. </label>
+                <br/>
+                <br/>
+                <Link to="/login">
+                    <button> Войти </button> 
+                </Link>
+                <br/>
+            </>
+        )
+    }
 }
  
 export default CommentFormComponent;
