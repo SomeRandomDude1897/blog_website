@@ -1,0 +1,56 @@
+.register-form {
+    background-color: #fdf2e9; /* светлый фон */
+    border: 2px solid #d2691e;
+    padding: 20px;
+    width: 300px;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.register-form label {
+    font-size: 1.1rem;
+    color: #8b4513;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.register-form input {
+    padding: 10px;
+    border: 1px solid #d2691e;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.register-form input:focus {
+    outline: none;
+    border-color: #ffdab9;
+    box-shadow: 0px 0px 5px rgba(210, 105, 30, 0.5);
+}
+
+.register-form button {
+    background-color: #d2691e;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-form button:hover {
+    background-color: #8b4513;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-incorrect {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    transition: color 0.3s ease;
+}

@@ -23,6 +23,17 @@
     font-size: 1.2rem;
 }
 
+.create-accout-link:hover {
+    transform: scale(1.05);
+}
+
+.create-accout-link {
+    text-align: center;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+    color: #8b4513;
+}
+
 /* Стили для input */
 .login-form input {
     padding: 10px;

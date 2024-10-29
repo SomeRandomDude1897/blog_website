@@ -67,7 +67,7 @@ const CommentFormComponent = (params) => {
             <br/>
             <form className="comment-form-box" onSubmit={PostNewComment}>
                 <label htmlFor="comment-content">Оставьте комментарий</label>
-                <textarea type="text" id="comment-box" onChange={(e) => {setCommentText(e.target.value)}} placeholder="Напишите, что думаете" value={commentText} required></textarea>
+                <textarea type="text" id="comment-box" onChange={(e) => {setCommentText(e.target.value)}} placeholder="Напишите, что думаете" value={commentText}></textarea>
                 <AddImagesComponent max_images={max_images} images={commentImages} setImages={setCommentImages}></AddImagesComponent>
                 <button> Ответить </button>
                 <br/>

@@ -9,6 +9,7 @@ import { KeepAlive, AliveScope } from 'react-activation';
 import PageTracker from './PageTracker';
 import NewPostComponent from './NewPostComponent';
 import { AuthProvider } from './context/AuthProvider';
+import RegisterForm from './RegisterForm';
 
 function App() {
   const api_url = process.env.REACT_APP_API_URL;
@@ -30,6 +31,7 @@ function App() {
           <Route path="/account/:username" element={<AccountComponent api_url={api_url} images_path={image_url} />}/>
           <Route path="/post/:post_id" element={<PostComponent api_url={api_url} images_path={image_url}/>}/>
           <Route path="/add_new_post" element={<NewPostComponent api_url={api_url} />}/>
+          <Route path="/register" element={<RegisterForm api_url={api_url} />} />
         </Routes>
       </BrowserRouter>
     </AliveScope>

@@ -29,8 +29,6 @@ export const AuthProvider = ({children, api_url}) => {
     
         if (token) {
           // Если токен найден, обновляем состояние аутентификации
-          console.log("ВОТ ТОКЕН!!!!!!!!!!!!!!!!!")
-
           fetchData(jwtDecode(token)["user_id"])
         }
         else

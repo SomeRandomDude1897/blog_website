@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { AuthContext } from "./context/AuthProvider";
 import "./styles/Login.css"
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginComponent = (props) => {
 
@@ -14,7 +14,7 @@ const LoginComponent = (props) => {
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
 
-    console.log(rememberMe);
+    console.log(props.has_prev);
 
     const checkLogin = async (e) =>  {
         e.preventDefault();
@@ -32,7 +32,7 @@ const LoginComponent = (props) => {
             {
                 localStorage.setItem('authToken', response.data["auth_token"]);
             }
-            navigate(-1);
+            navigate("/account");
         }
         else
         {
@@ -54,6 +54,8 @@ const LoginComponent = (props) => {
                     <input type="checkbox" id="rememberMeCheckBox" onChange={(e) => {setRememberMe(e.target.checked)}}></input>
                 </div>
                 <button>Войти</button>
+                <Link className="create-accout-link" to="/register">Нет аккаунта? Создайте прямо сейчас!</Link>
+                <br/>
                 <div style={{color: authStatus == "Success" ? "rgb(41, 201, 76)" : "rgb(168, 33, 23)" }} className="login-incorrect">{authStatus == "Success" ? "Авторизация успешна, возвращаемся на предыдущую страницу..." : authStatus == "Fail" ? "Некорректный логин или пароль!" : ""}</div>
             </form>
             
