@@ -26,6 +26,7 @@ from .views import (
     get_comments,
     add_post,
     add_comment,
+    register,
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -40,4 +41,5 @@ urlpatterns = [
     path("comments/", get_comments),
     path("new_post", add_post),
     path("new_comment", add_comment),
+    path("register", register),
 ]

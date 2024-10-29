@@ -177,14 +177,49 @@ def add_comment(request):
 
 
 @api_view(["POST"])
+def register(request):
+    if User.objects.filter(email=request.data.get("email")).exists():
+        return Response(
+            "email already in use", status=rest_framework.status.HTTP_400_BAD_REQUEST
+        )
+    if User.objects.filter(username=request.data.get("username")).exists():
+        return Response(
+            "username already in use", status=rest_framework.status.HTTP_400_BAD_REQUEST
+        )
+    new_user_serializer = user_serializer(
+        data={
+            "username": request.data.get("username"),
+            "email": request.data.get("email"),
+            "is_staff": False,
+        }
+    )
+    if new_user_serializer.is_valid():
+        new_user_serializer.save()
+        new_user = User.objects.get(username=request.data.get("username"))
+        new_user.set_password(request.data.get("password"))
+        new_user.save()
+        new_user_data_serializer = user_data_serializer(
+            data={"bio": "", "user_origin": new_user.id, "profile_pic": None}
+        )
+        if new_user_data_serializer.is_valid():
+            new_user_data_serializer.save()
+        else:
+            print(new_user_data_serializer.errors)
+        return Response(
+            "user successfully created", status=rest_framework.status.HTTP_200_OK
+        )
+    return Response(
+        "something went wrong", status=rest_framework.status.HTTP_400_BAD_REQUEST
+    )
+
+
+@api_view(["POST"])
 def auth(request):
     login = request.data.get("username")
     password = request.data.get("password")
     remember_me = request.data.get("remember_me")
 
     user = authenticate(username=login, password=password)
-
-    print(login, password)
 
     if user is not None:
         serializer = user_serializer(user, many=False)

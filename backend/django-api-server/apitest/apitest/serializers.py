@@ -6,13 +6,13 @@ from django.contrib.auth.models import User
 class user_serializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "email", "first_name", "last_name"]
+        fields = ["id", "username", "email", "is_staff"]
 
 
 class user_data_serializer(serializers.ModelSerializer):
     class Meta:
         model = UserData
-        fields = ["id", "user_origin", "profile_pic", "bio"]
+        fields = ["id", "user_origin", "bio", "profile_pic"]
 
 
 class post_serializer(serializers.ModelSerializer):
