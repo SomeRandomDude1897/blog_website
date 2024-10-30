@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import FeedPost from "./FeedPost";
 import { v4 as uuidv4 } from 'uuid';
+import DeletePopup from "./DeletePopup";
 
 const AccountComponent = (params) => {
     const { username } = useParams();
@@ -14,12 +15,31 @@ const AccountComponent = (params) => {
     const [dataLoadStatus, setLoadStatus] = useState("pending");
     const [editingBio, setEditingBioStatus] = useState(false);
     const [newBioText, setNewBioText] = useState("");
+    const [deletingAccount, setDeletingAccountState] = useState(false);
     const navigate = useNavigate();
 
     function exitAccount() {
         localStorage.setItem('authToken', "");
         setAuth({});
-        navigate("/");
+        navigate("/"); 
+    }
+
+    const deleteAccount = async () => {
+        try
+        {
+            console.log(params.api_url + "users_detail/?username=" + (username ? username : auth?.user["username"]));
+            const responce = await axios.delete(params.api_url + "users_detail/?username=" + (username ? username : auth?.user["username"]));
+            console.log(responce.status)
+            if (responce.status == 200)
+            {
+                localStorage.setItem('authToken', "");
+                setAuth({});
+                navigate("/");
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
     console.log(editingBio)
@@ -63,12 +83,16 @@ const AccountComponent = (params) => {
 
     const changeBio = async () => {
         setEditingBioStatus(false);
-        
-        const new_profile_data = {
-            "user_origin": auth?.user["id"],
-            "bio": newBioText,
+
+        if (newBioText != userData["user_extra_data"]["bio"])
+        {
+            
+            const new_profile_data = {
+                "user_origin": auth?.user["id"],
+                "bio": newBioText,
+            }
+            updateProfile(new_profile_data)
         }
-        updateProfile(new_profile_data)
     }
 
 
@@ -80,10 +104,13 @@ const AccountComponent = (params) => {
                     console.log(params.api_url + "users_detail/?username=" + (username ? username : auth?.user["username"]))
                     const responce = await axios.get(params.api_url + "users_detail/?username=" + (username ? username : auth?.user["username"]));
                     console.log(responce.data);
-                    setUserData(responce.data);
-                    setNewBioText(responce.data["user_extra_data"]["bio"]);
-                    setLoadStatus("success");
-                    return responce.data;
+                    if (responce.data)
+                    {
+                        setUserData(responce.data);
+                        setNewBioText(responce?.data["user_extra_data"]["bio"]);
+                        setLoadStatus("success");
+                        return responce.data;
+                    }
                 }
                 catch (e)
                 {
@@ -92,7 +119,13 @@ const AccountComponent = (params) => {
                 }
 
             }
-            fetchData();
+            if (auth?.user?.username || username)
+            {
+                fetchData();
+            }
+            else {
+                setLoadStatus("fail");
+            }
         }
         , [username]
     )    
@@ -108,7 +141,7 @@ const AccountComponent = (params) => {
             dataLoadStatus == "success" ?
             (
                 <>
-
+                <DeletePopup text={"Вы уверены, что хотите удалить свой аккаунт?"} dependentProp={deletingAccount} setDependentProp={setDeletingAccountState} Action={deleteAccount} />
                 <div className="user-profile-info-box">
                     <div className="user-username">  {userData["user_info"]["username"]} </div>
                     {username ? null : <div className="user-email"> {"Email: " + userData["user_info"]["email"]} </div>}
@@ -122,7 +155,9 @@ const AccountComponent = (params) => {
                     }
                     { editingBio ? 
                     <textarea className="user-bio-textarea" onChange={(e) => {setNewBioText(e.target.value)}} value={newBioText}></textarea> :
-                    <div className="user-bio-text">{userData["user_extra_data"]["bio"]}</div>}
+                    userData["user_extra_data"]["bio"] != ""
+                         ? (<div className="user-bio-text">{userData["user_extra_data"]["bio"]}</div>) : null
+                        }
                     </div>
                     {username ? null : 
                         <div className="profile-control-box">
@@ -133,6 +168,7 @@ const AccountComponent = (params) => {
                             </div>
                             { editingBio ? <button onClick={changeBio}> Закончить редактирование биографии</button> : <button onClick={() => {setEditingBioStatus(true)}} className="change-bio"> Сменить биографию </button>}
                             <button onClick={exitAccount} className="exit-button"> Выйти </button>
+                            <button onClick={(e) => {setDeletingAccountState(true)}} className="delete-account-button">Удалить аккаунт</button>
                         </div>
                     }
                     <br/>
@@ -153,8 +189,8 @@ const AccountComponent = (params) => {
 
                 </div>
                 </>
-                    ) : dataLoadStatus == "pending" ? (<div> Loading user data... </div>) :
-                        (<div> Failed to load user data </div>)
+                    ) : dataLoadStatus == "pending" ? (<div><br/><br/><br/><br/> <h2>Loading user data....</h2> </div>) :
+                        (<div><br/><br/><br/><br/> <h2>Failed to load user data</h2> </div>)
         }
         </>
     )

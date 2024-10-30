@@ -189,21 +189,21 @@ def update_user_data(request):
 
     # Передайте instance в сериалайзер вместе с обновленными данными
     if request.FILES:
+        print("files")
         update_user_data_serializer = user_data_serializer(
             instance=user_data_instance,
             data={
                 "user_origin": request.data.get("user_origin"),
                 "profile_pic": request.FILES.get("profile_pic"),
-                "bio": user_data_instance.bio,
             },
             partial=True,  # Позволяет обновить только переданные поля
         )
-    elif request.data.get("bio"):
+    else:
+        print("no_files")
         update_user_data_serializer = user_data_serializer(
             instance=user_data_instance,
             data={
                 "user_origin": request.data.get("user_origin"),
-                "profile_pic": user_data_instance.profile_pic,
                 "bio": request.data.get("bio"),
             },
             partial=True,  # Позволяет обновить только переданные поля
@@ -306,6 +306,20 @@ def images_detail(request):
         image.delete()
         return Response(
             "data deleted successfully", status=rest_framework.status.HTTP_200_OK
+        )
+
+
+@api_view(["DELETE"])
+def delete_comment(request):
+    try:
+        comment = get_object_or_404(PostComment, id=int(request.GET.get("comment_id")))
+        comment.delete()
+        return Response(
+            "comment deleted successfully", rest_framework.status.HTTP_200_OK
+        )
+    except:
+        return Response(
+            "something went wrong", rest_framework.status.HTTP_400_BAD_REQUEST
         )
 
 

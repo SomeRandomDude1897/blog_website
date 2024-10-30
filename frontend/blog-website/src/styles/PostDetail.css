@@ -85,6 +85,11 @@
     margin-bottom: 20px;
 }
 
+.delete-post-button {
+    background-color: rgb(197, 21, 21);
+    margin-right: 1%;
+}
+
 .post-detail-image {
     width: auto;
     max-width: 90%; 

@@ -9,7 +9,7 @@ class UserData(models.Model):
         User, related_name="data", on_delete=models.CASCADE
     )
     profile_pic = models.ImageField(upload_to="profile_images/", blank=True, null=True)
-    bio = models.CharField(max_length=1000, blank=True)
+    bio = models.CharField(max_length=1000, blank=True, null=True)
 
     def __str__(self) -> str:
         return str(self.user_origin)

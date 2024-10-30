@@ -94,12 +94,22 @@
 .profile-control-box{
     display: flex;
     justify-content: space-between;
-    padding: 0% 25%;
+    padding: 0% 15%;
 }
 
 .exit-button {
     width: 20%;
 }
+
+.delete-account-button {
+    background-color: rgb(182, 20, 20);
+}
+
+.delete-account-button:hover {
+    background-color: rgb(245, 27, 27);
+}
+
+
 
 .user-bio-textarea {
     margin-top: 3%;
@@ -111,6 +121,8 @@
     resize: none;
     box-sizing: border-box; /* Учитывает отступы и границы в ширине */
 }
+
+
 
 .change-profile-picture-box {
     width: 20%;

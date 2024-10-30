@@ -41,6 +41,17 @@
     margin-top: 10px;
 }
 
+.delete-comment-button:hover {
+    background: none;
+    color: rgb(255, 0, 0);
+}
+
+.delete-comment-button {
+    font-size: 1.5rem;
+    background: none;
+    color: rgb(226, 14, 14);
+}
+
 .comment-image {
     max-height: 30%;
     max-width: 30%;
