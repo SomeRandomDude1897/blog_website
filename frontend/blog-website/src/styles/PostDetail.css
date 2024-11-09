@@ -88,6 +88,7 @@
 .delete-post-button {
     background-color: rgb(197, 21, 21);
     margin-right: 1%;
+    height: 40px;
 }
 
 .post-detail-image {

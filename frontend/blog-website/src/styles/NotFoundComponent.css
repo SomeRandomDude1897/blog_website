@@ -1,0 +1,29 @@
+.not-found-main-label {
+    margin-top: 20%;
+    text-align: center;
+}
+
+.return-to-main-button {
+    background-color: #d2691e; /* Цвет кнопки */
+    color: white; /* Цвет текста кнопки */
+    font-size: 1.2rem; /* Размер шрифта для кнопки */
+    padding: 10px 20px; /* Отступы внутри кнопки */
+    border: none; /* Убираем рамку */
+    border-radius: 20px; /* Скругление углов */
+    cursor: pointer; /* Указываем, что элемент кликабельный */
+    transition: background-color 0.3s ease; /* Плавный переход фона кнопки */
+    text-decoration: none;
+    width: 10%;
+    align-self: center;
+    text-align: center;
+}
+
+.action-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.return-to-main-button :hover {
+    background-color: #8b4513; /* Цвет кнопки при наведении */
+}
+
