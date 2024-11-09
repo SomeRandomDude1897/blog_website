@@ -1,8 +1,0 @@
-apitest/.env
-.vscode 
-apitest/media
-mysql_testapi.session.sql
-no_admin_panel.session.sql
-.venv
-apitest/apitest/migrations
-apitest/apitest/__pycache__
