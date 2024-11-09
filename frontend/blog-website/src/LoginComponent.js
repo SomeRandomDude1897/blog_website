@@ -13,11 +13,8 @@ const LoginComponent = (props) => {
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
-  console.log(props.has_prev);
-
   const checkLogin = async (e) => {
     e.preventDefault();
-    console.log(props.api_url);
     const response = await axios.post(props.api_url, {
       username: login,
       password: password,

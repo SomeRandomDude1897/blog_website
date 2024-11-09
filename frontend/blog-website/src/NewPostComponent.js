@@ -13,8 +13,6 @@ const NewPostComponent = (props) => {
   const [images, setImages] = useState([]);
   const [sentDataToServer, setDataSendStatus] = useState("");
 
-  console.log(auth);
-
   function PostNewPost(event) {
     const postData = async () => {
       const formData = new FormData();
@@ -30,7 +28,6 @@ const NewPostComponent = (props) => {
       });
 
       try {
-        console.log(props.api_url + "new_post");
         const response = await axios.post(
           props.api_url + "new_post",
           formData,
@@ -40,8 +37,6 @@ const NewPostComponent = (props) => {
             },
           }
         );
-
-        console.log("Успешно:", response.data);
         setImages([]);
         setPostName("");
         setPostContent("");

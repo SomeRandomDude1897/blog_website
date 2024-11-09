@@ -14,8 +14,6 @@ const CommentFormComponent = (props) => {
 
   const max_images = 3;
 
-  console.log(showedError);
-
   function PostNewComment(event) {
     const postData = async () => {
       const formData = new FormData();
@@ -29,7 +27,6 @@ const CommentFormComponent = (props) => {
       });
 
       try {
-        console.log(props.api_url + "new_comment");
         const response = await axios.post(
           props.api_url + "new_comment",
           formData,
@@ -39,8 +36,6 @@ const CommentFormComponent = (props) => {
             },
           }
         );
-
-        console.log("Успешно:", response.data);
         setCommentImages([]);
         setCommentText("");
       } catch (error) {

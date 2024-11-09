@@ -40,7 +40,6 @@ const AddImagesComponent = (props) => {
       <button onClick={AddPicture}> Добавить картинку</button>
       <div className="added-pictures-box">
         {props.images.map((item) => {
-          console.log(item);
           return (
             <div key={item.id} className="added-picture-box">
               <div>{item.file.name}</div>

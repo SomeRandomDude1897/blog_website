@@ -56,12 +56,8 @@ const FeedContent = (props) => {
           feedData.slice(-postsFetchAmount).map((item) => {
             last_posts.push(item.id);
           });
-          console.log(last_posts);
           post_time_prefix = "&last_posts=" + last_posts;
         }
-        console.log(
-          props.api_url + "posts/?amount=" + postsFetchAmount + post_time_prefix
-        );
         const response = await axios.get(
           props.api_url + "posts/?amount=" + postsFetchAmount + post_time_prefix
         );
@@ -80,7 +76,6 @@ const FeedContent = (props) => {
         feedData.length == 0) &&
       prevScroll <= window.scrollY + window.innerHeight
     ) {
-      console.log("knjfsdf");
       fetchData();
     }
     updateScroll(window.scrollY + window.innerHeight);

@@ -9,8 +9,6 @@ const Header = (props) => {
   const location = useLocation();
   const { auth, setAuth } = useContext(AuthContext);
   const { scroll: savedScrollPosition, setScroll } = useContext(ScrollContext);
-  console.log("amogus");
-  console.log(auth?.user);
   function set_scroll_state() {
     setScroll({
       ...savedScrollPosition,

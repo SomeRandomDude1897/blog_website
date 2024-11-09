@@ -17,7 +17,7 @@ function App() {
   const image_url = process.env.REACT_APP_IMAGE_SERVER_URL;
   const auth_url = api_url + "auth/";
   const save_scroll_pages = ["/"];
-  console.log(image_url);
+
   return (
     <>
       <AuthProvider api_url={api_url}>

@@ -28,22 +28,8 @@ const PostComponent = (props) => {
 
   const [currentImageNumber, setCurrentImageNumber] = useState(0);
 
-  console.log(props.api_url);
-
   const fetchComments = async () => {
-    console.log(fetchStatus);
     if (fetchStatus == "success") {
-      console.log("load comments");
-      console.log(
-        props.api_url +
-          "comments/" +
-          "?post_id=" +
-          data["post_info"]["id"] +
-          "&amount=" +
-          commentsLoadAmount +
-          "&start_amount=" +
-          (comments ? comments.length : 0)
-      );
       const comments_request = await axios.get(
         props.api_url +
           "comments/" +
@@ -55,11 +41,6 @@ const PostComponent = (props) => {
           (comments ? comments.length : 0)
       );
       setComments(comments.concat(comments_request.data));
-      console.log(comments);
-    } else {
-      setTimeout(() => {
-        console.log(fetchStatus);
-      }, 1000);
     }
   };
 
@@ -116,16 +97,13 @@ const PostComponent = (props) => {
   function deleteComment(comment_id) {
     const deleteCommentFromAPI = async (del_id) => {
       try {
-        console.log(props.api_url + "delete_comment/?comment_id=" + del_id);
         const responce = await axios.delete(
           props.api_url + "delete_comment/?comment_id=" + del_id
         );
-        console.log(responce.status);
       } catch (e) {
         console.log(e);
       }
     };
-    console.log("удаляем id " + String(comment_id));
     try {
       setComments(comments.filter((comm) => comm["id"] !== comment_id));
       deleteCommentFromAPI(comment_id);
@@ -136,14 +114,10 @@ const PostComponent = (props) => {
 
   const DeletePost = async () => {
     try {
-      console.log(props.api_url + "posts_detail/?request_id=" + post_id);
       const responce = await axios.delete(
         props.api_url + "posts_detail/?request_id=" + post_id
       );
-      console.log(responce.status);
       if (responce.status == 200) {
-        localStorage.setItem("authToken", "");
-        setAuth({});
         navigate("/");
       }
     } catch (e) {
@@ -151,13 +125,9 @@ const PostComponent = (props) => {
     }
   };
 
-  console.log(hasScrolledToBottom);
-
   useEffect(() => {
     fetchComments();
   }, [hasScrolledToBottom]);
-
-  console.log(fetchStatus);
 
   if (fetchStatus == "success") {
     const datetime = new Date(data["post_info"]["created_at"]);

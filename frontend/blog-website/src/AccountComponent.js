@@ -26,17 +26,11 @@ const AccountComponent = (props) => {
 
   const deleteAccount = async () => {
     try {
-      console.log(
-        props.api_url +
-          "users_detail/?username=" +
-          (username ? username : auth?.user["username"])
-      );
       const responce = await axios.delete(
         props.api_url +
           "users_detail/?username=" +
           (username ? username : auth?.user["username"])
       );
-      console.log(responce.status);
       if (responce.status == 200) {
         localStorage.setItem("authToken", "");
         setAuth({});
@@ -47,11 +41,8 @@ const AccountComponent = (props) => {
     }
   };
 
-  console.log(editingBio);
-
   const updateProfile = async (newProfileData) => {
     try {
-      console.log(props.api_url);
       const formData = new FormData();
       formData.append(`user_origin`, newProfileData["user_origin"]);
       if (newProfileData["bio"]) {
@@ -64,7 +55,6 @@ const AccountComponent = (props) => {
         props.api_url + "update_user_data",
         formData
       );
-      console.log(responce.data);
       setLoadStatus("success");
       navigate("/account/" + auth?.user["username"]);
       return responce.data;
@@ -97,17 +87,11 @@ const AccountComponent = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(
-          props.api_url +
-            "users_detail/?username=" +
-            (username ? username : auth?.user["username"])
-        );
         const responce = await axios.get(
           props.api_url +
             "users_detail/?username=" +
             (username ? username : auth?.user["username"])
         );
-        console.log(responce.data);
         if (responce.data) {
           setUserData(responce.data);
           setNewBioText(responce?.data["user_extra_data"]["bio"]);

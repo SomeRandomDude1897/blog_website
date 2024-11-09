@@ -20,7 +20,6 @@ const RegisterForm = (props) => {
 
   function Register(event) {
     const setRegister = async () => {
-      console.log(props.api_url + "register");
       const response = await axios.post(props.api_url + "register", {
         username: login,
         email: email,

@@ -72,7 +72,6 @@ CORS_ALLOW_METHODS = [
     "PUT",
 ]
 
-
 ROOT_URLCONF = "apitest.urls"
 
 TEMPLATES = [

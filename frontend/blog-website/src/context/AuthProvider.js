@@ -1,49 +1,47 @@
 import { createContext, useEffect, useState } from "react";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({children, api_url}) => {
-    const [auth, setAuth] = useState({});
-    const [loadedData, setLoadedData] = useState(false);
+export const AuthProvider = ({ children, api_url }) => {
+  const [auth, setAuth] = useState({});
+  const [loadedData, setLoadedData] = useState(false);
 
-    console.log(api_url)
+  useEffect(() => {
+    const fetchData = async (user_id) => {
+      try {
+        console.log(api_url + "users_detail/?user_id=" + user_id);
+        const responce = await axios.get(
+          api_url + "users_detail/?user_id=" + user_id
+        );
+        console.log(responce.data);
+        setAuth({
+          user: responce.data["user_info"],
+          user_data: responce.data["user_data"],
+        });
+        setLoadedData(true);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    const token =
+      localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
 
-    useEffect(() => {
-        const fetchData = async (user_id) => {
-            try
-            {
-                console.log(api_url + "users_detail/?user_id=" + user_id)
-                const responce = await axios.get(api_url + "users_detail/?user_id=" + user_id);
-                console.log(responce.data)
-                setAuth({"user": responce.data["user_info"], "user_data": responce.data["user_data"]});
-                setLoadedData(true)
-            }
-            catch (e)
-            {
-                console.log(e);
-            }
-        }
-        const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
-    
-        if (token) {
-          // Если токен найден, обновляем состояние аутентификации
-          fetchData(jwtDecode(token)["user_id"])
-        }
-        else
-        {
-            setLoadedData(true)
-        }
-      }, []);
-    if (loadedData)
-    {
-    return ( 
-        <AuthContext.Provider value = {{auth, setAuth}}>
-            {children}
-        </AuthContext.Provider>
-     );
+    if (token) {
+      // Если токен найден, обновляем состояние аутентификации
+      fetchData(jwtDecode(token)["user_id"]);
+    } else {
+      setLoadedData(true);
     }
-}
- 
-export {AuthContext};
+  }, []);
+  if (loadedData) {
+    return (
+      <AuthContext.Provider value={{ auth, setAuth }}>
+        {children}
+      </AuthContext.Provider>
+    );
+  }
+};
+
+export { AuthContext };
