@@ -1,0 +1,54 @@
+version: '3.9'
+
+x-base:
+  &base
+  restart: always
+  env_file:
+    - default.env
+    - .env
+  networks:
+    # - nginx
+    - apitest
+
+
+x-django:
+  &django
+  <<: *base
+  build:
+      context: apitest
+  depends_on:
+    - db
+
+
+
+services:
+  db:
+    <<: *base
+    image: mysql:8.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+  
+  db-migrate:
+    <<: *django
+    restart: "no"
+    command: python manage.py migrate
+
+  web:
+    <<: *django
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./apitest:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - db-migrate
+
+networks:
+  apitest:
+
+  # nginx:
+  #   external: true
+
+volumes:
+  mysql_data:

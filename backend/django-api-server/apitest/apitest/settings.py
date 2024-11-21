@@ -99,9 +99,9 @@ WSGI_APPLICATION = "apitest.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": config("DB_NAME"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
+        "NAME": config("MYSQL_DATABASE"),
+        "USER": config("MYSQL_USER"),
+        "PASSWORD": config("MYSQL_PASSWORD"),
         "HOST": config("DB_HOST"),
         "PORT": config("DB_PORT"),
     }
