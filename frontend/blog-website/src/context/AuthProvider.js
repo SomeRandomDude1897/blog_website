@@ -11,11 +11,9 @@ export const AuthProvider = ({ children, api_url }) => {
   useEffect(() => {
     const fetchData = async (user_id) => {
       try {
-        console.log(api_url + "users_detail/?user_id=" + user_id);
         const responce = await axios.get(
           api_url + "users_detail/?user_id=" + user_id
         );
-        console.log(responce.data);
         setAuth({
           user: responce.data["user_info"],
           user_data: responce.data["user_data"],

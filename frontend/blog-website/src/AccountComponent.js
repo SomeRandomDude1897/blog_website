@@ -153,7 +153,7 @@ const AccountComponent = (props) => {
                   }}
                   value={newBioText}
                 ></textarea>
-              ) : userData["user_extra_data"]["bio"] != "" ? (
+              ) : userData["user_extra_data"]["bio"] ? (
                 <div className="user-bio-text">
                   {userData["user_extra_data"]["bio"]}
                 </div>

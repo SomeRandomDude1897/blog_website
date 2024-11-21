@@ -240,7 +240,7 @@ const PostComponent = (props) => {
         <br />
         <br />
         <br />
-        <div className="post-detail-name"> Fetching data... </div>
+        <div className="post-detail-name"> Загрузка... </div>
       </>
     );
   } else {
@@ -251,7 +251,7 @@ const PostComponent = (props) => {
         <br />
         <br />
         <br />
-        <div className="post-detail-name"> Post unavailable </div>
+        <div className="post-detail-name"> Пост недоступен </div>
       </>
     );
   }
